@@ -27,6 +27,13 @@ const cards = [
 
 const memoryGame = new MemoryGame(cards);
 
+/*  FUNCTIONS */
+function showPairsClicked() {
+  let score = document.getElementById("pairs-clicked");
+  score.innerHTML = memoryGame.pairsClicked;
+}
+
+
 window.addEventListener('load', event => {
   let html = '';
   memoryGame.cards.forEach(pic => {
@@ -40,9 +47,37 @@ window.addEventListener('load', event => {
   document.querySelector('#memory-board').innerHTML = html;
 
   // Bind the click event of each element to a function
+  const cardPair = [];
+  const cardNames = [];
+  
   document.querySelectorAll('.card').forEach(card => {
     card.addEventListener('click', () => {
-      // TODO: write some code here
+      card.classList.add('turned') //turn cards
+      
+      cardPair.push(card); //save cards
+
+      let cardName = card.dataset.cardName // get card name
+      cardNames.push(cardName); //store the card name
+      
+      // if two cards are clicked
+      if (cardNames.length == 2) {
+        let result = memoryGame.checkIfPair(cardNames[0], cardNames[1]); //compare card names
+        console.log(result)
+        if (result) {
+          console.log("log")
+          cardPair.forEach(card => card.classList.add('blocked')); // block the two cards
+          cardPair.length = 0; // empty array
+          cardNames.length = 0; //empty array
+        } else {
+          console.log("else")
+          cardPair.forEach(card => card.classList.remove('turned')); //remove "turned class from cards
+          cardPair.length = 0; //empty array
+          cardNames.length = 0; //empty array
+        }
+      }
+
+      memoryGame.isFinished();
+      if (memoryGame.isFinished())
       console.log(`Card clicked: ${card}`);
     });
   });
