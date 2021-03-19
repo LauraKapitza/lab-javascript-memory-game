@@ -69,10 +69,11 @@ window.addEventListener('load', event => {
           cardPair.length = 0; // empty array
           cardNames.length = 0; //empty array
         } else {
-          console.log("else")
-          cardPair.forEach(card => card.classList.remove('turned')); //remove "turned class from cards
-          cardPair.length = 0; //empty array
-          cardNames.length = 0; //empty array
+          setTimeout(() => {
+            cardPair.forEach(card => card.classList.remove('turned')); //remove "turned class from cards
+            cardPair.length = 0; //empty array
+            cardNames.length = 0; //empty array
+          },750);
         }
       }
 
